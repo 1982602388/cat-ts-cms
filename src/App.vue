@@ -7,9 +7,6 @@
     <router-view />
   </div>
 </template>
-<script lang="ts">
+<script lang="ts"></script>
 
-</script>
-
-<style lang="less">
-</style>
+<style lang="less"></style>

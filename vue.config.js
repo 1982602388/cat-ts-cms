@@ -1,7 +1,4 @@
 const path = require('path')
-const AutoImport = require('unplugin-auto-import/webpack')
-const Components = require('unplugin-vue-components/webpack')
-const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = {
   // 1.配置方式一: CLI提供的属性
@@ -26,15 +23,19 @@ module.exports = {
     config.resolve.alias
       .set('@', path.resolve(__dirname, 'src'))
       .set('components', '@/components')
-      .set("views","@/views")
+      .set('views', '@/views')
   },
   configureWebpack: {
     plugins: [
-      require('unplugin-vue-components/webpack')({ /* options */ }),
-      require('unplugin-auto-import/webpack')({ /* options */ }),
+      require('unplugin-vue-components/webpack')({
+        /* options */
+      }),
+      require('unplugin-auto-import/webpack')({
+        /* options */
+      }),
       require('unplugin-element-plus/webpack')({
         // options
-      }),
-    ],
-  },
+      })
+    ]
+  }
 }
