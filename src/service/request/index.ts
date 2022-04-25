@@ -25,14 +25,26 @@ class CCRequest {
       this.interceptors?.responseInterceptorCatch
     )
     // 2.添加所有的实例都有的拦截器
-    this.instance.interceptors.request.use((config) => {
-      console.log('所有的实例都有的拦截器：请求成功')
-      return config
-    })
-    this.instance.interceptors.response.use((res) => {
-      console.log('所有的实例都有的拦截器：响应成功')
-      return res
-    })
+    this.instance.interceptors.request.use(
+      (config) => {
+        console.log('所有的实例都有的拦截器：请求成功')
+        return config
+      },
+      (err) => {
+        console.log('所有的实例都有的拦截器：请求成功')
+        return err
+      }
+    )
+    this.instance.interceptors.response.use(
+      (res) => {
+        console.log('所有的实例都有的拦截器：响应成功')
+        return res
+      },
+      (err) => {
+        console.log('所有的实例都有的拦截器：响应成功')
+        return err
+      }
+    )
   }
 
   request(config: CCRequestConfig): void {
