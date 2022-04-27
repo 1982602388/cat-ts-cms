@@ -28,4 +28,18 @@ CCRequest1.request({
   url: '/home/multidata'
 })
 
+interface DataType {
+  data: any
+  returnCode: string
+  success: boolean
+}
+CCRequest1.get<DataType>({
+  url: '/home/multidata',
+  showLoading: false
+}).then((res) => {
+  console.log(res.data)
+  console.log(res.returnCode)
+  console.log(res.success)
+})
+
 createApp(App).use(store).use(router).use(globalRegister).mount('#app')
