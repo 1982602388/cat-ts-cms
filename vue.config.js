@@ -24,6 +24,8 @@ module.exports = {
       .set('@', path.resolve(__dirname, 'src'))
       .set('components', '@/components')
       .set('views', '@/views')
+      .set('assets', '@assets')
+      .set('utils', '@/utils')
   },
   configureWebpack: {
     plugins: [

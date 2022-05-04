@@ -1,9 +1,5 @@
 <template>
-  <div id="nav">
-    <h2>{{ $store.state.counter }}</h2>
-    <router-link to="/">Login</router-link>
-    <router-link to="/home">Home</router-link>
-    <el-button type="primary">test</el-button>
+  <div id="app">
     <router-view />
   </div>
 </template>

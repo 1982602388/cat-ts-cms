@@ -9,7 +9,8 @@ import {
   ElLink,
   ElRadio,
   ElTabPane,
-  ElTabs
+  ElTabs,
+  ElIcon
 } from 'element-plus'
 
 const components = [
@@ -21,11 +22,19 @@ const components = [
   ElTabs,
   ElTabPane,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElIcon
 ]
+//图片
+import { Avatar, Iphone } from '@element-plus/icons-vue'
+
+const icons = [Avatar, Iphone]
 
 export default function (app: App): void {
   for (const component of components) {
     app.component(component.name, component)
+  }
+  for (const icon of icons) {
+    app.component(icon.name, icon)
   }
 }
