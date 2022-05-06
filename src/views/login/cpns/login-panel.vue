@@ -27,7 +27,7 @@
     </el-tabs>
 
     <div class="check">
-      <el-checkbox v-model="isKeepPassword" ref="text">记住密码</el-checkbox>
+      <el-checkbox v-model="isKeepPassword">记住密码</el-checkbox>
       <el-link>忘记密码</el-link>
     </div>
     <div class="commit">

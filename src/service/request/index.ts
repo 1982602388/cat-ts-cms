@@ -33,7 +33,6 @@ class CCRequest {
     // 2.添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('所有的实例都有的拦截器：请求成功')
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
@@ -44,14 +43,11 @@ class CCRequest {
         return config
       },
       (err) => {
-        console.log('所有的实例都有的拦截器：请求成功')
         return err
       }
     )
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('所有的实例都有的拦截器：响应成功')
-
         //关闭loading动画
         this.loading?.close()
 
@@ -64,7 +60,6 @@ class CCRequest {
         }
       },
       (err) => {
-        console.log('所有的实例都有的拦截器：响应成功')
         this.loading?.close()
         // 例子: 判断不同的HttpErrorCode显示不同的错误信息
         if (err.response.status === 404) {

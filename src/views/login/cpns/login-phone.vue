@@ -3,15 +3,15 @@
 <!-- description:  -->
 <template>
   <div class="login-phone">
-    <el-form :model="form" label-width="80px">
-      <el-form-item label="手机号码">
-        <el-input v-model="model"></el-input>
+    <el-form label-width="80px">
+      <el-form-item label="手机号码" prop="num">
+        <el-input v-model="phone.num"></el-input>
       </el-form-item>
     </el-form>
-    <el-form :model="form" label-width="80px">
-      <el-form-item label="验证码">
+    <el-form label-width="80px">
+      <el-form-item label="验证码" prop="code">
         <div class="get-code">
-          <el-input v-model="model"></el-input>
+          <el-input v-model="phone.code"></el-input>
           <el-button type="primary" class="elBtn">获取验证码</el-button>
         </div>
       </el-form-item>
@@ -20,11 +20,18 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 export default defineComponent({
   name: 'login-phone',
   setup() {
-    return {}
+    const phone = reactive({
+      num: '',
+      code: ''
+    })
+
+    return {
+      phone
+    }
   }
 })
 </script>
