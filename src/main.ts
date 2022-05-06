@@ -8,6 +8,7 @@ import 'normalize.css'
 import './assets/css/index.less'
 //导入全局注册的插件
 import { globalRegister } from './global'
+import { setupStore } from './store/index'
 
 // //导入封装的axios
 // import CCRequest1 from './service'
@@ -46,3 +47,4 @@ import { globalRegister } from './global'
 // })
 
 createApp(App).use(store).use(router).use(globalRegister).mount('#app')
+setupStore()

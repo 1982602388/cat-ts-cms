@@ -1,12 +1,20 @@
 import CCRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
+import localCache from '../utils/cache'
 
 const CCRequest1 = new CCRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptor: (config) => {
-      console.log('请求成功的拦截')
+      const token = localCache.getCache('token')
+      if (token) {
+        //需要结构出来
+        config.headers = {
+          ...config.headers,
+          Authorization: `Bearer ${token}`
+        }
+      }
       return config
     },
     requestInterceptorCatch: (err) => {

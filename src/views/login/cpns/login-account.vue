@@ -9,9 +9,9 @@
         <el-input v-model="account.name" placeholder=""></el-input>
       </el-form-item>
       <!-- 密码 -->
-      <el-form-item label="密码" prop="pass">
+      <el-form-item label="密码" prop="password">
         <el-input
-          v-model="account.pass"
+          v-model="account.password"
           placeholder=""
           show-password
         ></el-input>
@@ -33,7 +33,7 @@ export default defineComponent({
     const store = useStore()
     const account = reactive({
       name: localCache.getCache('name') ?? '',
-      pass: localCache.getCache('password') ?? ''
+      password: localCache.getCache('password') ?? ''
     })
 
     //账号本地缓存
@@ -45,7 +45,7 @@ export default defineComponent({
           if (isKeepPassword) {
             //本地缓存
             localCache.setCache('name', account.name)
-            localCache.setCache('password', account.pass)
+            localCache.setCache('password', account.password)
           } else {
             localCache.deleteCache('name')
             localCache.deleteCache('password')
