@@ -9,7 +9,8 @@ const CCRequest1 = new CCRequest({
     requestInterceptor: (config) => {
       const token = localCache.getCache('token')
       if (token) {
-        //需要结构出来
+        //需要解构出来
+        // config.headers.Authorization = `Bearer ${token}`
         config.headers = {
           ...config.headers,
           Authorization: `Bearer ${token}`

@@ -10,7 +10,16 @@ import {
   ElRadio,
   ElTabPane,
   ElTabs,
-  ElIcon
+  ElIcon,
+  ElContainer,
+  ElHeader,
+  ElAside,
+  ElMain,
+  ElMenu,
+  ElMenuItem,
+  ElMenuItemGroup,
+  ElSubMenu,
+  ElScrollbar
 } from 'element-plus'
 
 const components = [
@@ -23,7 +32,16 @@ const components = [
   ElTabPane,
   ElCheckbox,
   ElLink,
-  ElIcon
+  ElIcon,
+  ElContainer,
+  ElHeader,
+  ElAside,
+  ElMain,
+  ElMenu,
+  ElMenuItem,
+  ElMenuItemGroup,
+  ElSubMenu,
+  ElScrollbar
 ]
 //图片
 import { Avatar, Iphone } from '@element-plus/icons-vue'

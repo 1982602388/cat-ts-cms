@@ -3,7 +3,7 @@ import localCache from '@/utils/cache'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/main'
   },
   {
     path: '/login',
@@ -11,9 +11,9 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('views/login/login.vue')
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import('views/Home.vue')
+    path: '/main',
+    name: 'Main',
+    component: () => import('views/main/main.vue')
   }
 ]
 
