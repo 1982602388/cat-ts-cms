@@ -9,7 +9,10 @@ import './assets/css/index.less'
 //导入全局注册的插件
 import { globalRegister } from './global'
 import { setupStore } from './store/index'
+import { mapMenusToRoutes } from '@/utils/map-menus'
+// import { useStore } from '@/store/index'
 
+// mapMenusToRoutes(useStore().state.login.userMenu)
 // //导入封装的axios
 // import CCRequest1 from './service'
 

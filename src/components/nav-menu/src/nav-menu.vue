@@ -5,13 +5,14 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title">CoderCMS</span>
+      <span class="title" v-if="!collapse">CoderCMS</span>
     </div>
     <el-menu
       default-active="2"
       class="el-menu-vertical"
       background-color="#c2135"
       text-color="#b7bdc3"
+      :collapse="collapse"
       active-text-color="#0a60bd"
     >
       <template v-for="item in userMenus" :key="item.id">
@@ -20,12 +21,17 @@
           <!-- 二级菜单 -->
           <el-sub-menu :index="item.id + ''">
             <template #title>
-              <i v-if="item.icon" :class="item.icon"></i>
+              <el-icon v-if="item.icon" class="item-icon">
+                <component :is="item.icon.substring(8)" />
+              </el-icon>
               <span>{{ item.name }}</span>
             </template>
             <!-- 遍历里面的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id + ''">
+              <el-menu-item
+                :index="subitem.id + ' '"
+                @click="handleMenuItemClick(subitem)"
+              >
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
@@ -35,7 +41,9 @@
         <!-- 二级菜单 -->
         <template v-else-if="item.type === 2">
           <el-menu-item :index="item.id + ''">
-            <i v-if="item.icon" :class="item.icon"></i>
+            <el-icon v-if="item.icon" class="item-icon">
+              <component :is="item.icon.substring(8)" />
+            </el-icon>
             <span>{{ item.name }}</span>
           </el-menu-item>
         </template>
@@ -47,13 +55,28 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store/index'
+import router from '@/router'
 export default defineComponent({
   name: 'nav-menu',
+  props: {
+    collapse: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenu)
+    console.log(store.state.login.userMenu)
+
+    const handleMenuItemClick = (item: any) => {
+      router.push({
+        path: item.url ?? '/not-found'
+      })
+    }
     return {
-      userMenus
+      userMenus,
+      handleMenuItemClick
     }
   }
 })

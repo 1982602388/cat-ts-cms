@@ -19,7 +19,10 @@ import {
   ElMenuItem,
   ElMenuItemGroup,
   ElSubMenu,
-  ElScrollbar
+  ElScrollbar,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem
 } from 'element-plus'
 
 const components = [
@@ -41,18 +44,22 @@ const components = [
   ElMenuItem,
   ElMenuItemGroup,
   ElSubMenu,
-  ElScrollbar
+  ElScrollbar,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem
 ]
-//图片
-import { Avatar, Iphone } from '@element-plus/icons-vue'
+// //图片
+// import { Avatar, Iphone, Fold, Expand } from '@element-plus/icons-vue'
 
-const icons = [Avatar, Iphone]
+// const icons = [Avatar, Iphone, Fold, Expand]
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 export default function (app: App): void {
   for (const component of components) {
     app.component(component.name, component)
   }
-  for (const icon of icons) {
-    app.component(icon.name, icon)
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
   }
 }

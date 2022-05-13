@@ -11,7 +11,9 @@
         <el-header class="page-header">
           <nav-header @foldChange="handleFoldChange" />
         </el-header>
-        <el-main class="page-content">Main</el-main>
+        <el-main class="page-content">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -20,13 +22,19 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import navMenu from '@/components/nav-menu/src/nav-menu.vue'
+import NavHeader from '@/components/nav-header'
 export default defineComponent({
   name: 'Home',
   components: {
-    navMenu
+    navMenu,
+    NavHeader
   },
   setup() {
-    return {}
+    const isCollapse = ref(false)
+    const handleFoldChange = (isFold: boolean) => {
+      isCollapse.value = isFold
+    }
+    return { handleFoldChange, isCollapse }
   }
 })
 </script>
