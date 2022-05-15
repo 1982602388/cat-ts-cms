@@ -37,6 +37,7 @@ module.exports = {
       .set('views', '@/views')
       .set('assets', '@/assets')
       .set('utils', '@/utils')
+      .set('base-ui', '@/base-ui')
   },
   configureWebpack: {
     //配置elementplus

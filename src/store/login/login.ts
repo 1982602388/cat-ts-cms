@@ -63,7 +63,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       localCache.setCache('userMenu', userMenu)
 
       //跳转到主页
-      router.push('/home')
+      router.push('/main')
     },
     // phoneLoginAction({ commit }, payload: any) {
     //   console.log('phoneLoginAction', payload)

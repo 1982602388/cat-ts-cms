@@ -3,9 +3,9 @@
 <!-- description:  -->
 <template>
   <div class="user-info">
-    <el-dropdown>
+    <el-dropdown class="el-dropdown-link">
       <el-icon><user /></el-icon>
-      <span class="el-dropdown-link">
+      <span class="info-name">
         {{ name }}
         <el-icon class="el-icon--right">
           <arrow-down />
@@ -40,7 +40,12 @@ export default defineComponent({
 <style scoped lang="less">
 .user-info {
   .el-dropdown-link {
-    margin-left: 5px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    .info-name {
+      margin-left: 5px;
+    }
   }
 }
 </style>
