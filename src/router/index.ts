@@ -1,5 +1,6 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import localCache from '@/utils/cache'
+import { firstMenu } from '@/utils/map-menus'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -23,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes
 })
 //导航守卫，当首次打开路径不为登录路径时，
@@ -34,6 +35,13 @@ router.beforeEach((to) => {
     if (!token) {
       return '/login'
     }
+  }
+
+  //当网址为http://localhost:8080时firstMenu会拼接上/main，然后判断为/main,
+  // 然后跳转到http:localhost:8080/#/main/analysis/overview
+
+  if (to.path === '/main') {
+    return firstMenu.url
   }
 })
 

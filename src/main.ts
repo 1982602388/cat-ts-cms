@@ -9,7 +9,7 @@ import './assets/css/index.less'
 //导入全局注册的插件
 import { globalRegister } from './global'
 import { setupStore } from './store/index'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+// import { mapMenusToRoutes } from '@/utils/map-menus'
 // import { useStore } from '@/store/index'
 
 // mapMenusToRoutes(useStore().state.login.userMenu)
@@ -48,6 +48,7 @@ import { mapMenusToRoutes } from '@/utils/map-menus'
 //   console.log(res.returnCode)
 //   console.log(res.success)
 // })
+//位置调换解决刷新后找不到页面
+setupStore()
 
 createApp(App).use(store).use(router).use(globalRegister).mount('#app')
-setupStore()

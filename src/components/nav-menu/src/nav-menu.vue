@@ -8,7 +8,7 @@
       <span class="title" v-if="!collapse">CoderCMS</span>
     </div>
     <el-menu
-      default-active="2"
+      :default-active="defaultValue"
       class="el-menu-vertical"
       background-color="#c2135"
       text-color="#b7bdc3"
@@ -29,7 +29,7 @@
             <!-- 遍历里面的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
               <el-menu-item
-                :index="subitem.id + ' '"
+                :index="subitem.id + ''"
                 @click="handleMenuItemClick(subitem)"
               >
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
@@ -53,9 +53,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from '@/store/index'
-import router from '@/router'
+import { useRouter, useRoute } from 'vue-router'
+import { pathToMenu } from '@/utils/map-menus'
 export default defineComponent({
   name: 'nav-menu',
   props: {
@@ -65,9 +66,20 @@ export default defineComponent({
     }
   },
   setup() {
+    //store
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenu)
-    console.log(store.state.login.userMenu)
+    console.log(userMenus)
+
+    //router
+    const router = useRouter()
+    const route = useRoute()
+    const currentPath = route.path
+
+    const menu = pathToMenu(userMenus.value, currentPath)
+    console.log(menu)
+
+    const defaultValue = ref(menu.id + '')
 
     const handleMenuItemClick = (item: any) => {
       router.push({
@@ -76,7 +88,8 @@ export default defineComponent({
     }
     return {
       userMenus,
-      handleMenuItemClick
+      handleMenuItemClick,
+      defaultValue
     }
   }
 })
