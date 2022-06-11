@@ -8,7 +8,10 @@
       <el-icon v-else size="30px"><expand /></el-icon>
     </span>
     <div class="content">
-      <div>面包屑</div>
+      <!-- 面包屑 -->
+      <cc-breadcrumb :breadcrumbs="breadcrumbs" />
+
+      <!-- 用户信息 -->
       <div class="user-info">
         <user-info />
       </div>
@@ -17,13 +20,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import userInfo from './user-info.vue'
+import { useStore } from '@/store/index'
+import { useRoute } from 'vue-router'
+import { pathMapBreadcrumbs } from '@/utils/map-menus'
+import ccBreadcrumb from '@/base-ui/Breadcrumb'
 export default defineComponent({
   name: 'nav-header',
   emits: ['foldChange'],
   components: {
-    userInfo
+    userInfo,
+    ccBreadcrumb
   },
   setup(props, { emit }) {
     const isFold = ref(false)
@@ -31,7 +39,21 @@ export default defineComponent({
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
-    return { handleIconClick, isFold }
+
+    // 面包屑的数据: [{name: , path: }]
+    const store = useStore()
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenu
+      const route = useRoute()
+      const currentPath = route.path
+      return pathMapBreadcrumbs(userMenus, currentPath)
+    })
+
+    return {
+      handleIconClick,
+      isFold,
+      breadcrumbs
+    }
   }
 })
 </script>
