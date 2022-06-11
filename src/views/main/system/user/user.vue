@@ -1,11 +1,11 @@
 <template>
   <div class="user">
-    <cc-form v-bind="searchFormConfig" />
+    <cc-form v-bind="searchFormConfig" v-model="formData" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import CcForm from '@/base-ui/form'
 import { searchFormConfig } from './config/search.config'
 
@@ -15,8 +15,15 @@ export default defineComponent({
     CcForm
   },
   setup() {
+    const formData = ref({
+      id: '',
+      name: '',
+      sport: '',
+      createTime: ''
+    })
     return {
-      searchFormConfig
+      searchFormConfig,
+      formData
     }
   }
 })
