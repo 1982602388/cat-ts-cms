@@ -69,7 +69,6 @@ export default defineComponent({
     //store
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenu)
-    console.log(userMenus)
 
     //router
     const router = useRouter()
@@ -77,7 +76,6 @@ export default defineComponent({
     const currentPath = route.path
 
     const menu = pathToMenu(userMenus.value, currentPath)
-    console.log(menu)
 
     const defaultValue = ref(menu.id + '')
 

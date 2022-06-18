@@ -1,5 +1,4 @@
 import { IForm } from '@/base-ui/form'
-import { id } from 'element-plus/lib/locale'
 
 export const searchFormConfig: IForm = {
   labelWidth: '120px',

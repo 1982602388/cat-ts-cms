@@ -31,7 +31,6 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenu(state, userMenu: any) {
       state.userMenu = userMenu
-      console.log(userMenu)
 
       // userMenus => routes
       const routes = mapMenusToRoutes(userMenu)
