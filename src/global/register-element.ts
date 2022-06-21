@@ -31,7 +31,8 @@ import {
   ElBreadcrumb,
   ElBreadcrumbItem,
   ElTable,
-  ElTableColumn
+  ElTableColumn,
+  ElPagination
 } from 'element-plus'
 
 const components = [
@@ -65,7 +66,8 @@ const components = [
   ElBreadcrumb,
   ElBreadcrumbItem,
   ElTable,
-  ElTableColumn
+  ElTableColumn,
+  ElPagination
 ]
 // //图片
 // import { Avatar, Iphone, Fold, Expand } from '@element-plus/icons-vue'

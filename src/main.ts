@@ -9,6 +9,11 @@ import './assets/css/index.less'
 //导入全局注册的插件
 import { globalRegister } from './global'
 import { setupStore } from './store/index'
+
+// 国际化
+import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+
 // import { mapMenusToRoutes } from '@/utils/map-menus'
 // import { useStore } from '@/store/index'
 
@@ -51,4 +56,14 @@ import { setupStore } from './store/index'
 //位置调换解决刷新后找不到页面
 setupStore()
 
-createApp(App).use(store).use(router).use(globalRegister).mount('#app')
+const app = createApp(App)
+app.use(store)
+app.use(router)
+app.use(globalRegister)
+
+// 国际化
+app.use(ElementPlus, {
+  locale: zhCn
+})
+
+app.mount('#app')
