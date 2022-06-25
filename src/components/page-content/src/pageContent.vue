@@ -3,16 +3,18 @@
 <!-- description:  -->
 <template>
   <div class="pageContent">
-    <cc-table :listData="dataList" v-bind="contentTableConfig">
+    <cc-table
+      :listData="dataList"
+      :listCount="dataCount"
+      v-bind="contentTableConfig"
+      v-model:page="pageInfo"
+    >
       <template #status="scoped">
-        <el-button
-          plain
-          size="mini"
-          :type="scoped.dataRow.enable ? 'success' : 'danger'"
-        >
+        <el-button plain :type="scoped.dataRow.enable ? 'success' : 'danger'">
           {{ scoped.dataRow.enable ? '启用' : '禁用' }}
         </el-button>
       </template>
+
       <template #createAt="scoped">
         <span>{{ $filters.formatTime(scoped.dataRow.createAt) }}</span>
       </template>
@@ -22,10 +24,10 @@
       </template>
       <template #handler>
         <div class="delete-btn">
-          <el-button type="text" size="mini"
+          <el-button type="text"
             ><el-icon><Edit /></el-icon>编辑</el-button
           >
-          <el-button type="text" size="mini"
+          <el-button type="text"
             ><el-icon><DeleteFilled /></el-icon>删除</el-button
           >
         </div>
@@ -35,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref, watch } from 'vue'
 import { useStore } from '@/store'
 
 import ccTable from '@/base-ui/table/src/table.vue'
@@ -56,21 +58,33 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    store.dispatch('system/getPageListAction', {
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
+
+    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    watch(pageInfo, () => getPageData())
+    const getPageData = (queryInfo: any = {}) => {
+      store.dispatch('system/getPageListAction', {
+        pageName: props.pageName,
+        queryInfo: {
+          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
+          ...queryInfo
+        }
+      })
+    }
+    getPageData()
 
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
     )
 
-    // const userCount = computed(() => store.state.system.usersCount)
+    const dataCount = computed(() =>
+      store.getters[`system/pageListCount`](props.pageName)
+    )
     return {
-      dataList
+      dataList,
+      dataCount,
+      pageInfo,
+      getPageData
     }
   }
 })

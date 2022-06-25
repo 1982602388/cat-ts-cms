@@ -15,7 +15,7 @@
             <el-icon><Refresh /></el-icon>重置</el-button
           >
 
-          <el-button type="primary">
+          <el-button type="primary" @click="handleQueryClick">
             <el-icon><Search /></el-icon>搜索</el-button
           >
         </div>
@@ -38,7 +38,8 @@ export default defineComponent({
   components: {
     CcForm
   },
-  setup(props) {
+  emits: ['resetBtnClick', 'queryBtnClick'],
+  setup(props, { emit }) {
     const formItems = props.searchFormConfig?.formItems ?? []
     const formOriginData: any = {}
     for (const item of formItems) {
@@ -49,14 +50,19 @@ export default defineComponent({
     const handleResetClick = () => {
       for (const key in formOriginData) {
         formData.value[`${key}`] = formOriginData[key]
-
-        console.log(formData.value[`${key}`])
-        // console.log(formOriginData[key])
       }
+      emit('resetBtnClick')
     }
+
+    const handleQueryClick = () => {
+      emit('queryBtnClick', formData.value)
+      console.log(formData.value)
+    }
+
     return {
       formData,
-      handleResetClick
+      handleResetClick,
+      handleQueryClick
     }
   }
 })

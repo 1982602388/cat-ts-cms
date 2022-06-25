@@ -15,7 +15,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     usersListChange(state, userList: any[]) {
       state.usersList = userList
     },
-    usersCounterChange(state, userCount: number) {
+    usersCountChange(state, userCount: number) {
       state.usersCount = userCount
     },
     roleListChange(state, list: any[]) {
@@ -36,6 +36,11 @@ const systemModule: Module<ISystemState, IRootState> = {
         //     return state.roleList
         // }
       }
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
+      }
     }
   },
   actions: {
@@ -47,6 +52,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       console.log(pageUrl)
 
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+      console.log(pageResult.data)
 
       const { list, totalCount } = pageResult.data
 

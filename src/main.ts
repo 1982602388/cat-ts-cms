@@ -11,7 +11,6 @@ import { globalRegister } from './global'
 import { setupStore } from './store/index'
 
 // 国际化
-import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 // import { mapMenusToRoutes } from '@/utils/map-menus'
@@ -60,10 +59,5 @@ const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(globalRegister)
-
-// 国际化
-app.use(ElementPlus, {
-  locale: zhCn
-})
 
 app.mount('#app')

@@ -41,14 +41,11 @@
     <div class="footer">
       <slot name="footer">
         <el-pagination
-          v-model:currentPage="currentPage4"
-          v-model:page-size="pageSize4"
-          :page-sizes="[100, 200, 300, 400]"
-          :small="small"
-          :disabled="disabled"
-          :background="background"
+          :currentPage="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30, 40]"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
@@ -58,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'cc-table',
   props: {
@@ -68,12 +65,14 @@ export default defineComponent({
     },
     listData: {
       type: Array,
-      default: () => [],
+      required: true
+    },
+    listCount: {
+      type: Number,
       required: true
     },
     propList: {
       type: Array,
-      default: () => [],
       required: true
     },
     showSelect: {
@@ -83,37 +82,24 @@ export default defineComponent({
     showIndex: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({
+        currentPage: 0,
+        pageSize: 10
+      })
     }
   },
-  setup() {
-    const currentPage1 = ref(5)
-    const currentPage2 = ref(5)
-    const currentPage3 = ref(5)
-    const currentPage4 = ref(4)
-    const pageSize2 = ref(100)
-    const pageSize3 = ref(100)
-    const pageSize4 = ref(100)
-    const small = ref(false)
-    const background = ref(false)
-    const disabled = ref(false)
-
-    const handleSizeChange = (val: number) => {
-      console.log(`${val} items per page`)
+  emits: ['update:page'],
+  setup(props, { emit }) {
+    const handleSizeChange = (pageSize: number) => {
+      emit('update:page', { ...props.page, pageSize })
     }
-    const handleCurrentChange = (val: number) => {
-      console.log(`current page: ${val}`)
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage })
     }
     return {
-      currentPage1,
-      currentPage2,
-      currentPage3,
-      currentPage4,
-      pageSize2,
-      pageSize3,
-      pageSize4,
-      small,
-      background,
-      disabled,
       handleSizeChange,
       handleCurrentChange
     }
