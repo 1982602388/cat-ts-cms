@@ -16,11 +16,11 @@
       </template>
 
       <template #createAt="scoped">
-        <span>{{ $filters.formatTime(scoped.dataRow.createAt) }}</span>
+        <span>{{ proxy?.$filters.formatTime(scoped.dataRow.createAt) }}</span>
       </template>
 
       <template #updateAt="scoped">
-        <span>{{ $filters.formatTime(scoped.dataRow.updateAt) }}</span>
+        <span>{{ proxy?.$filters.formatTime(scoped.dataRow.updateAt) }}</span>
       </template>
       <template #handler>
         <div class="delete-btn">
@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from 'vue'
+import { defineComponent, computed, ref, watch, getCurrentInstance } from 'vue'
 import { useStore } from '@/store'
 
 import ccTable from '@/base-ui/table/src/table.vue'
@@ -80,11 +80,13 @@ export default defineComponent({
     const dataCount = computed(() =>
       store.getters[`system/pageListCount`](props.pageName)
     )
+    const { proxy } = getCurrentInstance() as any
     return {
       dataList,
       dataCount,
       pageInfo,
-      getPageData
+      getPageData,
+      proxy
     }
   }
 })

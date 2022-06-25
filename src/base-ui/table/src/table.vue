@@ -25,7 +25,7 @@
       >
       </el-table-column>
 
-      <template v-for="propItem in propList" :key="propItem.prop">
+      <template v-for="propItem in (propList as any[])" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center">
           <template #default="scope">
             <!-- scope.row相当于当前行的数据对象 -->
@@ -73,7 +73,7 @@ export default defineComponent({
     },
     propList: {
       type: Array,
-      required: true
+      default: () => []
     },
     showSelect: {
       type: Boolean,

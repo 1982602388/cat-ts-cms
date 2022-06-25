@@ -10,9 +10,6 @@ import './assets/css/index.less'
 import { globalRegister } from './global'
 import { setupStore } from './store/index'
 
-// 国际化
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-
 // import { mapMenusToRoutes } from '@/utils/map-menus'
 // import { useStore } from '@/store/index'
 
