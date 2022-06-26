@@ -10,17 +10,17 @@
       v-model:page="pageInfo"
     >
       <template #status="scoped">
-        <el-button plain :type="scoped.dataRow.enable ? 'success' : 'danger'">
-          {{ scoped.dataRow.enable ? '启用' : '禁用' }}
+        <el-button plain :type="scoped.row.enable ? 'success' : 'danger'">
+          {{ scoped.row.enable ? '启用' : '禁用' }}
         </el-button>
       </template>
 
       <template #createAt="scoped">
-        <span>{{ proxy?.$filters.formatTime(scoped.dataRow.createAt) }}</span>
+        <span>{{ proxy.$filters.formatTime(scoped.row.createAt) }}</span>
       </template>
 
       <template #updateAt="scoped">
-        <span>{{ proxy?.$filters.formatTime(scoped.dataRow.updateAt) }}</span>
+        <span>{{ proxy.$filters.formatTime(scoped.row.updateAt) }}</span>
       </template>
       <template #handler>
         <div class="delete-btn">
@@ -31,6 +31,15 @@
             ><el-icon><DeleteFilled /></el-icon>删除</el-button
           >
         </div>
+      </template>
+      <template
+        v-for="item in otherSlotName"
+        :key="item.props"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
     </cc-table>
   </div>
@@ -58,9 +67,11 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-
+    // 分页的
     const pageInfo = ref({ currentPage: 0, pageSize: 10 })
     watch(pageInfo, () => getPageData())
+
+    //获取数据
     const getPageData = (queryInfo: any = {}) => {
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
@@ -73,6 +84,7 @@ export default defineComponent({
     }
     getPageData()
 
+    // 拿到vuex中对应数据
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
     )
@@ -80,13 +92,26 @@ export default defineComponent({
     const dataCount = computed(() =>
       store.getters[`system/pageListCount`](props.pageName)
     )
+    // 拿到剩余插槽名称
+    const otherSlotName = props.contentTableConfig?.propList.filter(
+      (item: any) => {
+        if (item.slotName === 'status') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
+        return true
+      }
+    )
+
+    //解决全局注册方法的类型报错 any
     const { proxy } = getCurrentInstance() as any
     return {
       dataList,
       dataCount,
       pageInfo,
       getPageData,
-      proxy
+      proxy,
+      otherSlotName
     }
   }
 })

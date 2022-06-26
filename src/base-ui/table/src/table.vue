@@ -26,11 +26,11 @@
       </el-table-column>
 
       <template v-for="propItem in (propList as any[])" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
+        <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template #default="scope">
             <!-- scope.row相当于当前行的数据对象 -->
             <!-- :name="propItem.slotName"动态绑定插槽名 -->
-            <slot :name="propItem.slotName" :dataRow="scope.row">
+            <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
             </slot>
           </template>
