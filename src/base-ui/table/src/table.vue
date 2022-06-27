@@ -11,7 +11,13 @@
         <el-button type="primary">新建用户</el-button>
       </slot>
     </div>
-    <el-table :data="listData" border style="width: 100%" flexible>
+    <el-table
+      :data="listData"
+      border
+      style="width: 100%"
+      flexible
+      v-bind="childrenProps"
+    >
       <!-- 最左边的选框 -->
       <el-table-column v-if="showSelect" type="selection" width="60">
       </el-table-column>
@@ -38,7 +44,7 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
           :currentPage="page.currentPage"
@@ -89,6 +95,14 @@ export default defineComponent({
         currentPage: 0,
         pageSize: 10
       })
+    },
+    childrenProps: {
+      type: Object,
+      default: () => ({})
+    },
+    showFooter: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['update:page'],
