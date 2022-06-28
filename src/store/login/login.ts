@@ -47,13 +47,16 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       //登录验证
       const loginResult = await accountLoginRequest(payload)
       console.log(loginResult.data.id, loginResult.data.token)
       const { id, token } = loginResult.data
       commit('changeToken', token)
       localCache.setCache('token', token)
+
+      //拿到部门初始化数据
+      dispatch('getInitialDataAction', null, { root: true })
 
       //请求用户信息
       const userInfoResult = await requestUserInfoById(id)
@@ -76,10 +79,11 @@ const loginModule: Module<ILoginState, IRootState> = {
 
     //避免刷新后vuex中数据消失
     //所以当刷新后再此赋值，在mian.js中调用该函数
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getCache('token')
       if (token) {
         commit('changeToken', token)
+        dispatch('getInitialDataAction', null, { root: true })
       }
       const userInfo = localCache.getCache('userInfo')
       if (token) {

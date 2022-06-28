@@ -45,7 +45,7 @@ const store = createStore<IRootState>({
 })
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
-  store.dispatch('getInitialDataAction')
+  // store.dispatch('getInitialDataAction') 转到登录拿到token之后再调用
 }
 export function useStore(): Store<IStoreType> {
   return useVuexStore()

@@ -4,8 +4,8 @@
 <template>
   <div class="user-info">
     <el-dropdown class="el-dropdown-link">
-      <el-icon><user /></el-icon>
       <span class="info-name">
+        <el-icon><user /></el-icon>
         {{ name }}
         <el-icon class="el-icon--right">
           <arrow-down />
@@ -13,7 +13,9 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+          <el-dropdown-item @click="handlerExitClick">
+            退出登录
+          </el-dropdown-item>
           <el-dropdown-item>管理系统</el-dropdown-item>
           <el-dropdown-item>用户信息</el-dropdown-item>
         </el-dropdown-menu>
@@ -25,13 +27,22 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store/index'
+import { useRouter } from 'vue-router'
+import LocalCache from '@/utils/cache'
 export default defineComponent({
   name: 'user-info',
   setup() {
     const store = useStore()
     const name = computed(() => store.state.login.userInfo.name)
+    const router = useRouter()
+
+    const handlerExitClick = () => {
+      LocalCache.deleteCache('token')
+      router.push('/main')
+    }
     return {
-      name
+      name,
+      handlerExitClick
     }
   }
 })
