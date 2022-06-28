@@ -9,6 +9,11 @@
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
     >
+      <template #createUser>
+        <el-button v-if="isCreate" type="primary" @click="handleNewClick">
+          新建用户
+        </el-button>
+      </template>
       <template #status="scoped">
         <el-button plain :type="scoped.row.enable ? 'success' : 'danger'">
           {{ scoped.row.enable ? '启用' : '禁用' }}
@@ -22,12 +27,12 @@
       <template #updateAt="scoped">
         <span>{{ proxy.$filters.formatTime(scoped.row.updateAt) }}</span>
       </template>
-      <template #handler>
+      <template #handler="scoped">
         <div class="delete-btn">
-          <el-button type="text"
+          <el-button type="text" @click="handleEditClick(scoped.row)"
             ><el-icon><Edit /></el-icon>编辑</el-button
           >
-          <el-button type="text"
+          <el-button type="text" @click="handlerDeleteClick(scoped.row)"
             ><el-icon><DeleteFilled /></el-icon>删除</el-button
           >
         </div>
@@ -48,6 +53,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, watch, getCurrentInstance } from 'vue'
 import { useStore } from '@/store'
+import { usePermission } from '@/hooks/use-permission'
 
 import ccTable from '@/base-ui/table/src/table.vue'
 export default defineComponent({
@@ -65,14 +71,23 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['newBtnClick', 'editBtnClick'],
+
+  setup(props, { emit }) {
     const store = useStore()
+
+    // 0.获取操作的权限
+    const isCreate = usePermission(props.pageName, 'create')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isQuery = usePermission(props.pageName, 'query')
     // 分页的
     const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     watch(pageInfo, () => getPageData())
 
     //获取数据
     const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
@@ -102,6 +117,19 @@ export default defineComponent({
         return true
       }
     )
+    //删除数据操作
+    const handlerDeleteClick = (item: any) => {
+      store.dispatch('system/deletePageDataAction', {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
+    const handleNewClick = () => {
+      emit('newBtnClick')
+    }
+    const handleEditClick = (item: any) => {
+      emit('editBtnClick', item)
+    }
 
     //解决全局注册方法的类型报错 any
     const { proxy } = getCurrentInstance() as any
@@ -111,7 +139,14 @@ export default defineComponent({
       pageInfo,
       getPageData,
       proxy,
-      otherSlotName
+      otherSlotName,
+      isCreate,
+      isUpdate,
+      isDelete,
+      isQuery,
+      handlerDeleteClick,
+      handleNewClick,
+      handleEditClick
     }
   }
 })

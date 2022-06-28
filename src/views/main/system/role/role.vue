@@ -24,8 +24,10 @@ import { defineComponent } from 'vue'
 
 import PageSearch from '@/components/page-search/src/page-search.vue'
 import pageContent from '@/components/page-content/src/pageContent.vue'
+
 import { searchFormConfig } from './config/config/search.config'
 import { contentTableConfig } from './config/config/content.config'
+
 import { usePageSearch } from '@/hooks/use-page-search'
 export default defineComponent({
   name: 'role',
