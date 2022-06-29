@@ -17,6 +17,7 @@
       style="width: 100%"
       flexible
       v-bind="childrenProps"
+      @selection-change="handleSelectionChange"
     >
       <!-- 最左边的选框 -->
       <el-table-column v-if="showSelect" type="selection" width="60">
@@ -105,8 +106,12 @@ export default defineComponent({
       default: true
     }
   },
-  emits: ['update:page'],
+  emits: ['update:page', 'selectionChange'],
   setup(props, { emit }) {
+    const handleSelectionChange = (value: any) => {
+      console.log(value)
+      emit('selectionChange', value)
+    }
     const handleSizeChange = (pageSize: number) => {
       emit('update:page', { ...props.page, pageSize })
     }
@@ -115,7 +120,8 @@ export default defineComponent({
     }
     return {
       handleSizeChange,
-      handleCurrentChange
+      handleCurrentChange,
+      handleSelectionChange
     }
   }
 })
