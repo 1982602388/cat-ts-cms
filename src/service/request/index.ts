@@ -104,16 +104,16 @@ class CCRequest {
     })
   }
 
-  get<T>(config: CCRequestConfig<T>): Promise<T> {
+  get<T = any>(config: CCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
-  post<T>(config: CCRequestConfig<T>): Promise<T> {
+  post<T = any>(config: CCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
-  delete<T>(config: CCRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: CCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
-  patch<T>(config: CCRequestConfig<T>): Promise<T> {
+  patch<T = any>(config: CCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
